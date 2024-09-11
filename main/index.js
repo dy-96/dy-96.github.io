@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`app running at http://localhost:${port}`)
+  console.log(`app running at http://yunusdede.github.io`)
 })
 
 //https://santrikoding.com/tutorial-expressjs-restful-api-1-membuat-project-expressjs
