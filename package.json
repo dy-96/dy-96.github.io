@@ -1,0 +1,21 @@
+{
+  "name": "iot",
+  "version": "1.0.0",
+  "description": "a iot controler",
+  "main": "main/index.js",
+  "scripts": {
+    "test": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "index"
+  },
+  "keywords": [
+    "indez"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
