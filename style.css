@@ -1,15 +1,24 @@
-body{
-    text-align: center;
+body {
+  text-align: center;
+  margin: 0;
 }
-nav{
-    list-style-type: none;
-    margin: 0;
-    padding: 5px;
-    text-decoration: underline;
+nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+  text-decoration: underline;
+  /* background-color: rgb(211, 255, 251); */
+  width: 100%;
+  overflow: auto;
 }
-.checkbox{
-    border-radius: 5px;
-    background-color: rgb(190, 225, 255);
-    padding: 4px;
-    padding-right: 10px;
+div {
+  margin: 10px;
+}
+.checkbox {
+  border-style: outset;
+  border-color: rgb(154, 197, 255);
+  border-radius: 5px;
+  background-color: rgb(226, 242, 255);
+  padding: 4px;
+  padding-right: 10px;
 }

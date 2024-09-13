@@ -7,7 +7,6 @@ import {
   update,
   remove,
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-
 import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -18,7 +17,7 @@ async function updateData(path, data) {
     .catch((error) => console.error("Error updating data:", error));
 }
 
-get(ref(db, "SWITCH"))
+const path = get(ref(db, "SWITCH"))
   .then((snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.val();
