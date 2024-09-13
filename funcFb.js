@@ -12,32 +12,30 @@ import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-
-// // switch
-$("#toggle-event").change(function () {
-  const check = $(this).prop("checked");
-  updateData("SWITCH", { led1: check });
-});
-// //$("#toggle-event").attr({ checked: "checked" });
-// readData("SWITCH", "led1");
-// //$("#toggle-event").remove();
-
 async function updateData(path, data) {
   update(ref(db, path), data)
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
 
-async function readData(path, key) {
-  get(ref(db, path))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        let value = data[key];
-        return value;
+get(ref(db, "SWITCH"))
+  .then((snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const value = data["led1"];
+      if (value) {
+        $("#switch").attr({ checked: "ckecked" });
       } else {
-        return null;
+        $("#switch").removeAttr("ckecked");
       }
-    })
-    .catch((error) => console.error("Error reading data:", error));
-}
+      console.log(value);
+    } else {
+      return null;
+    }
+  })
+  .catch((error) => console.error("Error reading data:", error));
+
+$("#switch").change(function () {
+  const check = $(this).prop("checked");
+  updateData("SWITCH", { led1: check });
+});

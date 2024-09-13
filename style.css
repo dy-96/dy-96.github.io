@@ -1,0 +1,15 @@
+body{
+    text-align: center;
+}
+nav{
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    text-decoration: underline;
+}
+.checkbox{
+    border-radius: 5px;
+    background-color: rgb(190, 225, 255);
+    padding: 4px;
+    padding-right: 10px;
+}
