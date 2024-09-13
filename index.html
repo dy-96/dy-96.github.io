@@ -1,19 +1,25 @@
 <html lang="en">
   <head>
     <title>iot</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
     <!--  -->
     <div><nav>CONTROL LED</nav></div>
-    <div>
-      <span class="checkbox">
-        <input type="checkbox" id="switch" data-toggle="toggle" />
-        <label>Led1</label>
-      </span>
+    <div class="container">
+      <div id="switch-container">
+        <div id="switch-selector"></div>
+        <span class="sw-active sw-deactivated sw">ON</span>
+        <span class="sw-inactive sw">OFF</span>
+      </div>
+      <input id="sw-check" type="checkbox" />
     </div>
 
     <script type="module" src="https://dy-96.github.io/funcFb.js?=2"></script>

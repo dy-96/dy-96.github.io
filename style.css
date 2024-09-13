@@ -1,6 +1,8 @@
 body {
+  zoom: unset;
   text-align: center;
   margin: 0;
+  user-select: none;
 }
 nav {
   list-style-type: none;
@@ -21,4 +23,53 @@ div {
   background-color: rgb(226, 242, 255);
   padding: 4px;
   padding-right: 10px;
+}
+
+/* switch */
+#sw-check {
+  display: none;
+}
+#switch-container {
+  border: 2px solid #ababab;
+  width: 92px;
+  height: 26px;
+  position: relative;
+  line-height: 1rem;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0px 1px 2px #333;
+  font-size: 0.8rem;
+  font-family: Verdana;
+  cursor: pointer;
+  cursor: hand;
+  background: rgba(33, 33, 33, 0.5);
+}
+
+#switch-selector {
+  background: #345d9d;
+  margin: 1px;
+  height: 24px;
+  width: 50%;
+  position: absolute;
+  left: 0px;
+  box-shadow: 0px 1px 3px #333;
+}
+.sw-active,
+.sw-inactive {
+  position: absolute;
+  line-height: 24px;
+  text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.4);
+}
+.sw {
+  color: #fff;
+}
+.sw-active {
+  right: 10px;
+}
+.sw-inactive {
+  left: 10px;
+}
+.sw-deactivated {
+  color: rgba(0, 0, 0, 0.3);
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
 }

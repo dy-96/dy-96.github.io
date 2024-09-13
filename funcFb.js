@@ -17,15 +17,19 @@ async function updateData(path, data) {
     .catch((error) => console.error("Error updating data:", error));
 }
 
-const path = get(ref(db, "SWITCH"))
+var isoff = true;
+get(ref(db, "SWITCH"))
   .then((snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.val();
       const value = data["led1"];
       if (value) {
-        $("#switch").attr({ checked: "ckecked" });
+        $(".sw").toggleClass("sw-deactivated");
+        $("#sw-check").attr({ checked: "checked" });
+        $("#switch-selector").css({ opacity: 0.8, left: "+=44px" });
+        isoff = false;
       } else {
-        $("#switch").removeAttr("ckecked");
+        $("#sw-check").removeAttr("checked");
       }
       console.log(value);
     } else {
@@ -34,7 +38,33 @@ const path = get(ref(db, "SWITCH"))
   })
   .catch((error) => console.error("Error reading data:", error));
 
-$("#switch").change(function () {
+$("#sw-check").change(function () {
   const check = $(this).prop("checked");
   updateData("SWITCH", { led1: check });
+});
+
+// switch
+$("#switch-container").click(function () {
+  $(".sw").toggleClass("sw-deactivated");
+  $("#sw-check").trigger("click");
+
+  if (isoff) {
+    $("#switch-selector").animate(
+      {
+        opacity: 0.8,
+        left: "+=44px",
+      },
+      100
+    );
+    isoff = false;
+  } else {
+    $("#switch-selector").animate(
+      {
+        opacity: 1,
+        left: "-=44px",
+      },
+      100
+    );
+    isoff = true;
+  }
 });
