@@ -1,20 +1,30 @@
 body {
   zoom: unset;
   text-align: center;
-  margin: 0;
   user-select: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: rgb(177, 177, 177);
 }
-nav {
+.container-body {
+  border: 5px rgb(84, 207, 255);
+  border-radius: 5px;
+  background-color: rgb(103, 95, 90);
+  width: 95%;
+  height: 98%;
+}
+.container-nav nav {
   list-style-type: none;
   margin: 0;
   padding: 5px;
   text-decoration: underline;
-  /* background-color: rgb(211, 255, 251); */
-  width: 100%;
+  background-color: rgb(201, 201, 201);
   overflow: auto;
+  color: #5f5d5d;
 }
-div {
-  margin: 10px;
+.container-switch{
+  padding: 10px;
 }
 .checkbox {
   border-style: outset;
