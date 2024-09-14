@@ -1,30 +1,31 @@
 body {
   zoom: unset;
-  text-align: center;
   user-select: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  background-color: rgb(177, 177, 177);
   margin: 0px;
 }
-.container-body {
+.box-body {
   margin: 0px auto;
   background-color: rgb(103, 95, 90);
   width: 100%;
   height: 100%;
 }
-.container-nav nav {
+.box-nav nav {
+  text-align: center;
   list-style-type: none;
   margin: 0;
   padding: 5px;
-  /* text-decoration: underline; */
   background-color: rgb(201, 201, 201);
   overflow: auto;
   color: #5f5d5d;
 }
-.container-switch{
-  padding: 10px;
+.box-switch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px;
+}
+.container-switch {
+  margin: 6px;
 }
 .checkbox {
   border-style: outset;
@@ -34,19 +35,16 @@ body {
   padding: 4px;
   padding-right: 10px;
 }
-
 /* switch */
 #sw-check {
   display: none;
 }
-#switch-container {
+#switch-container1 {
   border: 2px solid #ababab;
   width: 92px;
   height: 26px;
   position: relative;
   line-height: 1rem;
-  display: block;
-  margin: 0 auto;
   box-shadow: 0px 1px 2px #333;
   font-size: 0.8rem;
   font-family: Verdana;

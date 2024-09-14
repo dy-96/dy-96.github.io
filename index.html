@@ -15,23 +15,14 @@
       media="(prefers-color-scheme: dark)"
       content="black"
     />
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="./style.css?=2" />
   </head>
+  <body class="box-body">
+    <div class="box-nav"></div>
+    <div class="box-switch"></div>
 
-  <body>
-    <div class="container-body">
-      <div class="container-nav"><nav>CONTROL LED</nav></div>
-      <div class="container-switch">
-        <div id="switch-container">
-          <div id="switch-selector"></div>
-          <span class="sw-active sw-deactivated sw">ON</span>
-          <span class="sw-inactive sw">OFF</span>
-        </div>
-        <input id="sw-check" type="checkbox" />
-      </div>
-    </div>
-    <script type="module" src="./funcFb.js?=2"></script>
+    <script type="module" src="./app.js?=2"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
   </body>
 </html>
