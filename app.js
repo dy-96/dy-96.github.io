@@ -26,7 +26,6 @@ async function _switchCTRL() {
   $("#switch-container1").click(function () {
     $(".sw").toggleClass("sw-deactivated");
     $("#sw-check").trigger("click");
-
     if (isoff) {
       $("#switch-selector").animate(
         {
