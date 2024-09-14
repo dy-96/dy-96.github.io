@@ -6,13 +6,13 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   background-color: rgb(177, 177, 177);
+  margin: 0px;
 }
 .container-body {
-  border: 5px rgb(84, 207, 255);
-  border-radius: 5px;
+  margin: 0px auto;
   background-color: rgb(103, 95, 90);
-  width: 95%;
-  height: 98%;
+  width: 100%;
+  height: 100%;
 }
 .container-nav nav {
   list-style-type: none;
