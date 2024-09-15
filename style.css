@@ -24,9 +24,7 @@ body {
   justify-content: center;
   padding: 5px;
 }
-.container-switch {
-  margin: 6px;
-}
+
 .checkbox {
   border-style: outset;
   border-color: rgb(154, 197, 255);
@@ -36,10 +34,17 @@ body {
   padding-right: 10px;
 }
 /* switch */
-#sw-check {
+#sw-check1,
+#sw-check2,
+#sw-check3 {
   display: none;
 }
-#switch-container1 {
+.box-switch {
+  background-color: #345d9d;
+}
+#switch-box1,
+#switch-box2,
+#switch-box3 {
   border: 2px solid #ababab;
   width: 92px;
   height: 26px;
@@ -51,9 +56,16 @@ body {
   cursor: pointer;
   cursor: hand;
   background: rgba(33, 33, 33, 0.5);
+  margin: 5px;
+  display: flex;
+}
+.sw-nama{
+  text-align: center;
 }
 
-#switch-selector {
+#switch-selector1,
+#switch-selector2,
+#switch-selector3 {
   background: #345d9d;
   margin: 1px;
   height: 24px;
@@ -62,22 +74,34 @@ body {
   left: 0px;
   box-shadow: 0px 1px 3px #333;
 }
-.sw-active,
-.sw-inactive {
+.sw-active1,
+.sw-active2,
+.sw-active3,
+.sw-inactive1,
+.sw-inactive2,
+.sw-inactive3 {
   position: absolute;
   line-height: 24px;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.4);
 }
-.sw {
+.sw1,
+.sw2,
+.sw3 {
   color: #fff;
 }
-.sw-active {
+.sw-active1,
+.sw-active2,
+.sw-active3 {
   right: 10px;
 }
-.sw-inactive {
+.sw-inactive1,
+.sw-inactive2,
+.sw-inactive3 {
   left: 10px;
 }
-.sw-deactivated {
+.sw-deactivated1,
+.sw-deactivated2,
+.sw-deactivated3 {
   color: rgba(0, 0, 0, 0.3);
   text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
 }
