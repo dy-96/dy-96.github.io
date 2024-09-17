@@ -2,6 +2,7 @@ body {
   zoom: unset;
   user-select: none;
   margin: 0px;
+  overscroll-behavior-y: contain;
 }
 .box-body {
   margin: 0px auto;
