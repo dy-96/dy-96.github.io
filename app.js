@@ -11,11 +11,11 @@ import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-_judul("CONTROL LAMPU KAMAR");
+_judul("CONTROL LED");
 for (var i = 1; i <= 3; i++) {
   _printSwHtml(i);
   $("#name" + i)
-    .text("LAMPU " + i)
+    .text("LED " + i)
     .css({ color: "white" });
 }
 _led1(1);
