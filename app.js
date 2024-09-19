@@ -10,7 +10,7 @@ import {
 import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const updateRef = ref(db,"SWITCH")
+const updateRef = ref(db,"SWITCH");
 
 _judul("CONTROL LED");
 for (var i = 1; i <= 3; i++) {
