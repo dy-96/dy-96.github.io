@@ -176,7 +176,7 @@ async function _led3(id) {
 
 
 async function _updateData(path, data) {
- update(updateRef, data)))
+ update(updateRef, data)
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
