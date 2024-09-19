@@ -175,7 +175,7 @@ async function _led3(id) {
 
 
 async function _updateData(path, data) {
-  update(ref(db, path), data)
+  atuh( signInAnonymously(update(ref(db, path), data)))
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
