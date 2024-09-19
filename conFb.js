@@ -1,11 +1,10 @@
-var firebaseConfig = {
-  apiKey: "AIzaSyC2H5tcVHGSLpF08ya8_yJA8JdzV39QLdk",
-  authDomain: "kipas-78879.firebaseapp.com",
-  databaseURL:
-    "https://kipas-78879-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "kipas-78879",
-  storageBucket: "kipas-78879.appspot.com",
-  messagingSenderId: "29906188202",
-  appId: "1:29906188202:web:3e0710949345de5f551dd3",
+const firebaseConfig = {
+  apiKey: "AIzaSyAvxEITs76_Ci2X9qhprEuHyB7kITCzCLg",
+  authDomain: "ledio-16e86.firebaseapp.com",
+  databaseURL: "https://ledio-16e86-default-rtdb.firebaseio.com",
+  projectId: "ledio-16e86",
+  storageBucket: "ledio-16e86.appspot.com",
+  messagingSenderId: "74085125535",
+  appId: "1:74085125535:web:f8e8874e88dcbd75fd41aa"
 };
 export { firebaseConfig };
