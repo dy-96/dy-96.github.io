@@ -103,7 +103,7 @@ async function _led2(id) {
       isoff = true;
     }
   });
- atuh( signInAnonymously(get(ref(db, "SWITCH"))))
+get(ref(db, "SWITCH"))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -175,7 +175,7 @@ async function _led3(id) {
 
 
 async function _updateData(path, data) {
-  atuh( signInAnonymously(update(ref(db, path), data)))
+ update(ref(db, path), data)))
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
