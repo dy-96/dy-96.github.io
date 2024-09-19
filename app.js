@@ -10,6 +10,7 @@ import {
 import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const updateRef = ref(db,"SWITCH")
 
 _judul("CONTROL LED");
 for (var i = 1; i <= 3; i++) {
@@ -26,7 +27,7 @@ async function _led1(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData("SWITCH", { led1: check });
+    _updateData({ led1: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -53,7 +54,7 @@ async function _led1(id) {
       isoff = true;
     }
   });
-  get(ref(db, "SWITCH"))
+  get(updateRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -76,7 +77,7 @@ async function _led2(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData("SWITCH", { led2: check });
+    _updateData({ led2: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -103,7 +104,7 @@ async function _led2(id) {
       isoff = true;
     }
   });
-get(ref(db, "SWITCH"))
+get(updateRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -126,7 +127,7 @@ async function _led3(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData("SWITCH", { led3: check });
+    _updateData({ led3: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -153,7 +154,7 @@ async function _led3(id) {
       isoff = true;
     }
   });
-  get(ref(db, "SWITCH"))
+  get(updateRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -175,7 +176,7 @@ async function _led3(id) {
 
 
 async function _updateData(path, data) {
- update(ref(db, path), data)))
+ update(updateRef, data)))
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
