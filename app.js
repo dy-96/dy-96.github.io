@@ -4,13 +4,13 @@ import {
   ref,
   set,
   get,
-  update,
-  remove,
+  update
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+
 import { firebaseConfig } from "./conFb.js";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const updateRef = ref(db,"SWITCH");
+
 
 _judul("CONTROL LED");
 for (var i = 1; i <= 3; i++) {
@@ -19,15 +19,19 @@ for (var i = 1; i <= 3; i++) {
     .text("LED " + i)
     .css({ color: "white" });
 }
+
+
+
+
 _led1(1);
 _led2(2);
 _led3(3);
 
-async function _led1(id) {
+function _led1(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData({ led1: check });
+    _updateData("SWITCH", { led1: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -54,7 +58,7 @@ async function _led1(id) {
       isoff = true;
     }
   });
-  get(updateRef)
+  get(ref(db, "SWITCH"))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -77,7 +81,7 @@ async function _led2(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData({ led2: check });
+    _updateData("SWITCH", { led2: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -104,7 +108,7 @@ async function _led2(id) {
       isoff = true;
     }
   });
-get(updateRef)
+  get(ref(db, "SWITCH"))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -127,7 +131,7 @@ async function _led3(id) {
   var isoff = true;
   $("#sw-check" + id).change(function () {
     const check = $(this).prop("checked");
-    _updateData({ led3: check });
+    _updateData("SWITCH", { led3: check });
   });
 
   $("#switch-box" + id).click(function () {
@@ -154,7 +158,7 @@ async function _led3(id) {
       isoff = true;
     }
   });
-  get(updateRef)
+  get(ref(db, "SWITCH"))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -174,9 +178,8 @@ async function _led3(id) {
     .catch((error) => console.error("Error reading data:", error));
 }
 
-
-async function _updateData(path, data) {
- update(updateRef, data)
+function _updateData(path, data) {
+  update(ref(db, path), data)
     .then(() => console.log("Data updated successfully"))
     .catch((error) => console.error("Error updating data:", error));
 }
