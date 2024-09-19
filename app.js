@@ -103,7 +103,7 @@ async function _led2(id) {
       isoff = true;
     }
   });
-  get(ref(db, "SWITCH"))
+ atuh( signInAnonymously(get(ref(db, "SWITCH"))))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
