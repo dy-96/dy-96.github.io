@@ -32,7 +32,7 @@ function updateOutput() {
   const normalizedX2 = ((joysticks[1].currentX - centerX2) / radius).toFixed(2);
   const normalizedY2 = ((joysticks[1].currentY - centerY2) / radius).toFixed(2);
 
-  output.textContent = `Posisi Joystick 1: (${normalizedX1}, ${normalizedY1}) | Posisi Joystick 2: (${normalizedX2}, ${normalizedY2})`;
+  output.textContent = `Joystick 1: (${normalizedX1}, ${normalizedY1}) | Joystick 2: (${normalizedX2}, ${normalizedY2})`;
 }
 
 function moveJoystick(event) {
