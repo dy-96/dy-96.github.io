@@ -7,4 +7,7 @@ canvas {
 #output {
     text-align: center;
     font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 50px;
 }
