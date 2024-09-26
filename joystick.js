@@ -6,7 +6,7 @@ const centerX1 = canvas.width / 4;
 const centerY1 = canvas.height / 2;
 const centerX2 = (canvas.width * 3) / 4;
 const centerY2 = canvas.height / 2;
-const radius = 100;
+const radius = 50;
 
 let joysticks = [
     { isMoving: false, currentX: centerX1, currentY: centerY1 },
@@ -14,12 +14,12 @@ let joysticks = [
 ];
 
 function drawJoystick(x, y, centerX, centerY) {
-    ctx.fillStyle = 'lightgray';
+    ctx.fillStyle = 'rgba(211, 211, 211, 0.5)';
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'rgba(50, 54, 255, 0.5)';
     ctx.beginPath();
     ctx.arc(x, y, 30, 0, Math.PI * 2);
     ctx.fill();
