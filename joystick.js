@@ -120,7 +120,7 @@ canvas.addEventListener("touchend", () => {
 draw();
 
 //fullScreen
-const button = document.getElementById("fs");
+const button = document.getElementById("#fs");
 
 button.addEventListener("click", () => {
   if (document.fullscreenElement) {
