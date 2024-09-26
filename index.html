@@ -7,8 +7,22 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <button id="fs"></button>
     <canvas id="joystick" width="700" height="300"></canvas>
     <div id="output">Posisi Joystick 1: (0, 0) | Posisi Joystick 2: (0, 0)</div>
     <script src="joystick.js"></script>
+    <script>
+        const button = document.getElementById('fs');
+
+        button.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error al intentar activar pantalla completa: ${err.message}`);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
