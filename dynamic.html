@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Static Positioning JoyStick Example</title>
+    <title>Dynamic Positioning JoyStick Example</title>
     <style>
       * {
         margin: 0;
@@ -25,6 +25,7 @@
 
       .info {
         position: absolute;
+        z-index: 9999;
         background-color: #e3e3e3;
         padding: 10px;
         border-radius: 5px;
@@ -57,12 +58,33 @@
         text-align: center;
         z-index: 9999;
       }
+
+      .panel {
+        position: absolute;
+        opacity: 0.2;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        display: flex;
+      }
+
+      #panel-left {
+        width: 50%;
+        height: 100%;
+        background-color: #ff8d8d;
+      }
+
+      #panel-right {
+        width: 50%;
+        height: 100%;
+        background-color: #8181ff;
+      }
     </style>
   </head>
 
   <body>
     <canvas class="world"></canvas>
-    <a href="dynamic.html" class="link">Click for Dynamic Position Example</a>
+    <a href="index.html" class="link">Click for Dual JoyStick Example</a>
     <div class="info left">
       <p>X: <span id="x"></span></p>
       <p>Y: <span id="y"></span></p>
@@ -78,6 +100,10 @@
       <p>Y Leveled: <span id="yLeveled2"></span></p>
       <p>Distance: <span id="distance2"></span></p>
       <p>Angle: <span id="angle2"></span></p>
+    </div>
+    <div class="panel">
+      <div id="panel-left"></div>
+      <div id="panel-right"></div>
     </div>
     <script src="https://cdn.statically.io/gh/cyrus2281/joystick-controller/main/dist/umd/joystick-controller.min.js"></script>
     <script
@@ -121,14 +147,14 @@
 
       const leftJoystick = new JoystickController(
         {
-          x: "30%",
-          y: "30%",
           opacity: 0.5,
           maxRange: 80,
           radius: 70,
           joystickRadius: 40,
           joystickClass: "joystick",
           distortion: false,
+          dynamicPosition: true,
+          dynamicPositionTarget: document.querySelector("#panel-left"),
           mouseClickButton: "ALL",
           hideContextMenu: true,
         },
@@ -145,13 +171,12 @@
       );
       const rightJoystick = new JoystickController(
         {
-          x: "20%",
-          y: "20%",
-          leftToRight: false,
           opacity: 0.5,
           maxRange: 100,
           joystickClass: "joystick",
           distortion: true,
+          dynamicPosition: true,
+          dynamicPositionTarget: document.querySelector("#panel-right"),
           mouseClickButton: "LEFT",
           hideContextMenu: false,
         },
