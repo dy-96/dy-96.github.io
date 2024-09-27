@@ -145,9 +145,11 @@ const button = document.getElementById("fs");
 button.addEventListener("click", () => {
   if (document.fullscreenElement) {
     document.exitFullscreen();
+    button.textContent = "ex"
   } else {
     document.documentElement.requestFullscreen().catch((err) => {
       console.log(`Error message: ${err.message}`);
     });
+    button.textContent = "fs"
   }
 });
