@@ -11,8 +11,8 @@ const centerY2 = canvas2.height / 2;
 const radius = 50;
 
 const joysticks = [
-  { isMoving: false, currentX: centerX1, currentY: centerY1 },
-  { isMoving: false, currentX: centerX2, currentY: centerY2 }
+  { isMoving: false, currentX: centerX1, currentY: centerY1, touchId: null },
+  { isMoving: false, currentX: centerX2, currentY: centerY2, touchId: null }
 ];
 
 function drawJoystick(ctx, x, y, centerX, centerY) {
@@ -41,24 +41,27 @@ function moveJoystick(event, index) {
 
   for (let i = 0; i < touches.length; i++) {
     const touch = touches[i];
-    const rect = index === 0 ? canvas1.getBoundingClientRect() : canvas2.getBoundingClientRect();
-    const mouseX = touch.clientX - rect.left;
-    const mouseY = touch.clientY - rect.top;
 
-    const joystick = joysticks[index];
-    joystick.isMoving = true;
+    if (joysticks[index].touchId === touch.identifier) {
+      const rect = index === 0 ? canvas1.getBoundingClientRect() : canvas2.getBoundingClientRect();
+      const mouseX = touch.clientX - rect.left;
+      const mouseY = touch.clientY - rect.top;
 
-    const dx = mouseX - (index === 0 ? centerX1 : centerX2);
-    const dy = mouseY - (index === 0 ? centerY1 : centerY2);
-    const distance = Math.sqrt(dx * dx + dy * dy);
+      const joystick = joysticks[index];
+      joystick.isMoving = true;
 
-    if (distance < radius) {
-      joystick.currentX = mouseX;
-      joystick.currentY = mouseY;
-    } else {
-      const angle = Math.atan2(dy, dx);
-      joystick.currentX = (index === 0 ? centerX1 : centerX2) + radius * Math.cos(angle);
-      joystick.currentY = (index === 0 ? centerY1 : centerY2) + radius * Math.sin(angle);
+      const dx = mouseX - (index === 0 ? centerX1 : centerX2);
+      const dy = mouseY - (index === 0 ? centerY1 : centerY2);
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < radius) {
+        joystick.currentX = mouseX;
+        joystick.currentY = mouseY;
+      } else {
+        const angle = Math.atan2(dy, dx);
+        joystick.currentX = (index === 0 ? centerX1 : centerX2) + radius * Math.cos(angle);
+        joystick.currentY = (index === 0 ? centerY1 : centerY2) + radius * Math.sin(angle);
+      }
     }
   }
 
@@ -75,39 +78,62 @@ function draw() {
   updateOutput();
 }
 
+function handleTouchStart(event, index) {
+  const touches = event.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const touch = touches[i];
+
+    if (joysticks[index].touchId === null) {
+      joysticks[index].touchId = touch.identifier;
+      moveJoystick(event, index);
+      break;
+    }
+  }
+}
+
+function handleTouchEnd(event, index) {
+  const touches = event.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const touch = touches[i];
+
+    if (joysticks[index].touchId === touch.identifier) {
+      joysticks[index].touchId = null;
+      joysticks[index].isMoving = false;
+      joysticks[index].currentX = index === 0 ? centerX1 : centerX2;
+      joysticks[index].currentY = index === 0 ? centerY1 : centerY2;
+      draw();
+      break;
+    }
+  }
+}
+
 // Event listeners for touch on both joysticks
 canvas1.addEventListener("touchstart", (event) => {
   event.preventDefault(); // Prevent scroll
-  moveJoystick(event, 0);
+  handleTouchStart(event, 0);
 });
 
 canvas1.addEventListener("touchmove", (event) => {
   moveJoystick(event, 0);
 });
 
-canvas1.addEventListener("touchend", () => {
-  const joystick = joysticks[0];
-  joystick.isMoving = false;
-  joystick.currentX = centerX1;
-  joystick.currentY = centerY1;
-  draw();
+canvas1.addEventListener("touchend", (event) => {
+  handleTouchEnd(event, 0);
 });
 
 canvas2.addEventListener("touchstart", (event) => {
   event.preventDefault(); // Prevent scroll
-  moveJoystick(event, 1);
+  handleTouchStart(event, 1);
 });
 
 canvas2.addEventListener("touchmove", (event) => {
   moveJoystick(event, 1);
 });
 
-canvas2.addEventListener("touchend", () => {
-  const joystick = joysticks[1];
-  joystick.isMoving = false;
-  joystick.currentX = centerX2;
-  joystick.currentY = centerY2;
-  draw();
+canvas2.addEventListener("touchend", (event) => {
+  handleTouchEnd(event, 1);
 });
 
 // Initial drawing of the joysticks
