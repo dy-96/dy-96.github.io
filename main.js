@@ -4,7 +4,7 @@ const button = document.getElementById("fs");
 
 let isDragging = false;
 let angle = 0; // Current rotation angle in radians
-let startAngles = {}; // Store the starting angles for each touch
+let startAngle = 0; // Store the starting angle for the touch
 let animationFrame;
 const MAX_ANGLE = 100 * (Math.PI / 180); // Max angle in radians
 const MIN_ANGLE = -100 * (Math.PI / 180); // Min angle in radians
@@ -22,39 +22,28 @@ function updateSteeringWheel() {
 
 // Function to handle steering wheel rotation
 function rotateSteeringWheel(e) {
-  Array.from(e.touches).forEach((touch) => {
-    const touchId = touch.identifier;
-    const { x, y } = getAverageTouchPos(e.touches);
-    const newAngle = Math.atan2(y, x);
-    
-    let deltaAngle = newAngle - (startAngles[touchId] || newAngle);
-    
-    // Normalize deltaAngle to [-π, π]
-    if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
-    if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
+  if (e.touches.length === 0) return; // No touch, do nothing
 
-    angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angle + deltaAngle));
-    startAngles[touchId] = newAngle; // Update the starting angle for this touch
-  });
+  const { x, y } = getAverageTouchPos(e.touches);
+  const newAngle = Math.atan2(y, x);
+  
+  let deltaAngle = newAngle - startAngle;
+
+  // Normalize deltaAngle to [-π, π]
+  if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
+  if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
+
+  angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angle + deltaAngle));
+  startAngle = newAngle; // Update the starting angle for this touch
 
   updateSteeringWheel();
 }
 
 // Function to get the average touch position
 function getAverageTouchPos(touches) {
-  const total = Array.from(touches).reduce(
-    (acc, touch) => {
-      acc.x += touch.clientX;
-      acc.y += touch.clientY;
-      return acc;
-    },
-    { x: 0, y: 0 }
-  );
-
-  const avgX = total.x / touches.length;
-  const avgY = total.y / touches.length;
+  const touch = touches[0]; // Use only the first touch
   const rect = steeringWheel.getBoundingClientRect();
-  return { x: avgX - rect.left - rect.width / 2, y: avgY - rect.top - rect.height / 2 };
+  return { x: touch.clientX - rect.left - rect.width / 2, y: touch.clientY - rect.top - rect.height / 2 };
 }
 
 // Function to animate return to center
@@ -77,7 +66,7 @@ steeringWheel.addEventListener("touchstart", (e) => {
 
   const touch = e.touches[0]; // Get the first touch
   const { x, y } = getAverageTouchPos(e.touches);
-  startAngles[touch.identifier] = Math.atan2(y, x); // Store the starting angle for the touch
+  startAngle = Math.atan2(y, x); // Store the starting angle for the touch
 
   e.preventDefault(); // Prevent default touch behavior for the steering wheel
 });
@@ -90,15 +79,8 @@ steeringWheel.addEventListener("touchmove", (e) => {
 });
 
 steeringWheel.addEventListener("touchend", (e) => {
-  // Remove the starting angle for the released touch
-  Array.from(e.changedTouches).forEach((touch) => {
-    delete startAngles[touch.identifier];
-  });
-
-  if (Object.keys(startAngles).length === 0) {
-    isDragging = false;
-    animateReturnToCenter();
-  }
+  isDragging = false; // End dragging
+  animateReturnToCenter();
 });
 
 // Prevent default gestures and refresh on pull down
