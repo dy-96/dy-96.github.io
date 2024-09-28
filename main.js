@@ -1,4 +1,4 @@
-const steeringWheel = document.getElementById("steeringWheel");
+const steeringWheel = document.getElementById("_svg");
 const rotationDisplay = document.getElementById("rotationValue");
 let isDragging = false;
 let angle = 0;  // Current rotation angle in radians
@@ -85,11 +85,11 @@ steeringWheel.addEventListener("touchend", () => {
   isDragging = false;
   animateReturnToCenter();  // Return to 0° when touch ends
 });
-document.addEventListener('contextmenu', function(e) {
-  if (e.target.classList.contains('non-downloadable')) {
-    e.preventDefault();
-  }
-});
 
 // Initialize the steering wheel display
 updateSteeringWheel();
+
+
+document.addEventListener('gesturestart', function (e) {
+  e.preventDefault();
+});
