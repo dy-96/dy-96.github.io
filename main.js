@@ -103,12 +103,6 @@ steeringWheel.addEventListener("touchend", (e) => {
   }
 });
 
-// Prevent default gestures and refresh on pull down
-document.addEventListener("gesturestart", e => e.preventDefault());
-document.addEventListener("touchmove", e => {
-  if (!isDragging) e.preventDefault(); // Prevent scrolling only when not dragging
-}, { passive: false });
-window.addEventListener("scroll", () => window.scrollTo(0, 0));
 
 // Fullscreen functionality
 button.addEventListener("click", () => {
