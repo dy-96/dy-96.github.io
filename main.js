@@ -27,7 +27,7 @@ function rotateSteeringWheel(e) {
     const { x, y } = getAverageTouchPos(e.touches);
     const newAngle = Math.atan2(y, x);
     
-    let deltaAngle = newAngle - (startAngles[touchId] || 0);
+    let deltaAngle = newAngle - (startAngles[touchId] || newAngle);
     
     // Normalize deltaAngle to [-π, π]
     if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
@@ -102,7 +102,6 @@ steeringWheel.addEventListener("touchend", (e) => {
     animateReturnToCenter();
   }
 });
-
 
 // Prevent default gestures and refresh on pull down
 document.addEventListener("gesturestart", e => e.preventDefault());
