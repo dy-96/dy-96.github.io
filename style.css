@@ -1,23 +1,4 @@
-canvas {
-  /* border: 1px solid black; */
-  position: absolute;
-  margin: 10px;
-  background-color: transparent;
-}
-#joystick1 {
-  left: 0;
-  bottom: 0;
-}
-#joystick2{
-    right: 0;
-    bottom: 0;
-}
-#output {
-  text-align: center;
-  font-size: 20px;
-  top: 0;
-  left: 100px;
-}
-#fs{
-    position: absolute;
+*{
+    user-select: none;
+    text-align: center;
 }
