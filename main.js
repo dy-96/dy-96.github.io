@@ -72,7 +72,7 @@ function animateReturnToCenter() {
 
 // Event listeners
 steeringWheel.addEventListener("touchstart", (e) => {
-  if (e.touches.length > 1) return; // Only allow one touch
+  if (e.touches.length < 1) return; // Only allow one touch
 
   isDragging = true;
   cancelAnimationFrame(animationFrame); // Stop animation
