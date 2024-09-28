@@ -4,7 +4,7 @@ const button = document.getElementById("fs");
 
 let isDragging = false;
 let angle = 0; // Current rotation angle in radians
-let startAngle = 0; // Angle when touch starts
+let startAngles = {}; // Store the starting angles for each touch
 let animationFrame;
 const MAX_ANGLE = 100 * (Math.PI / 180); // Max angle in radians
 const MIN_ANGLE = -100 * (Math.PI / 180); // Min angle in radians
@@ -22,16 +22,20 @@ function updateSteeringWheel() {
 
 // Function to handle steering wheel rotation
 function rotateSteeringWheel(e) {
-  const { x, y } = getAverageTouchPos(e.touches);
-  const newAngle = Math.atan2(y, x);
-  let deltaAngle = newAngle - startAngle;
+  Array.from(e.touches).forEach((touch) => {
+    const touchId = touch.identifier;
+    const { x, y } = getAverageTouchPos(e.touches);
+    const newAngle = Math.atan2(y, x);
+    
+    let deltaAngle = newAngle - (startAngles[touchId] || 0);
+    
+    // Normalize deltaAngle to [-π, π]
+    if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
+    if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
 
-  // Normalize deltaAngle to [-π, π]
-  if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
-  if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
-
-  angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angle + deltaAngle));
-  startAngle = newAngle;
+    angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angle + deltaAngle));
+    startAngles[touchId] = newAngle; // Update the starting angle for this touch
+  });
 
   updateSteeringWheel();
 }
@@ -73,8 +77,11 @@ steeringWheel.addEventListener("touchstart", (e) => {
   isDragging = true;
   cancelAnimationFrame(animationFrame); // Stop animation
 
-  const { x, y } = getAverageTouchPos(e.touches);
-  startAngle = Math.atan2(y, x);
+  Array.from(e.touches).forEach((touch) => {
+    const touchId = touch.identifier;
+    const { x, y } = getAverageTouchPos(e.touches);
+    startAngles[touchId] = Math.atan2(y, x); // Store the starting angle for each touch
+  });
 });
 
 steeringWheel.addEventListener("touchmove", (e) => {
@@ -84,9 +91,16 @@ steeringWheel.addEventListener("touchmove", (e) => {
   }
 });
 
-steeringWheel.addEventListener("touchend", () => {
-  isDragging = false;
-  animateReturnToCenter();
+steeringWheel.addEventListener("touchend", (e) => {
+  // Remove the starting angles for released touches
+  Array.from(e.changedTouches).forEach((touch) => {
+    delete startAngles[touch.identifier];
+  });
+
+  if (Object.keys(startAngles).length === 0) {
+    isDragging = false;
+    animateReturnToCenter();
+  }
 });
 
 // Prevent default gestures and refresh on pull down
