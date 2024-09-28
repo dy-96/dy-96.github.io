@@ -85,6 +85,11 @@ steeringWheel.addEventListener("touchend", () => {
   isDragging = false;
   animateReturnToCenter();  // Return to 0° when touch ends
 });
+document.addEventListener('contextmenu', function(e) {
+  if (e.target.classList.contains('non-downloadable')) {
+    e.preventDefault();
+  }
+});
 
 // Initialize the steering wheel display
 updateSteeringWheel();
