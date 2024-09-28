@@ -72,16 +72,14 @@ function animateReturnToCenter() {
 
 // Event listeners
 steeringWheel.addEventListener("touchstart", (e) => {
-  if (e.touches.length > 2 || button.contains(e.target)) return; // Ignore more than two touches or if touching the button
+  if (isDragging || e.touches.length > 1 || button.contains(e.target)) return; // Only allow one touch
 
   isDragging = true;
   cancelAnimationFrame(animationFrame); // Stop animation
 
-  Array.from(e.touches).forEach((touch) => {
-    const touchId = touch.identifier;
-    const { x, y } = getAverageTouchPos(e.touches);
-    startAngles[touchId] = Math.atan2(y, x); // Store the starting angle for each touch
-  });
+  const touch = e.touches[0]; // Get the first touch
+  const { x, y } = getAverageTouchPos(e.touches);
+  startAngles[touch.identifier] = Math.atan2(y, x); // Store the starting angle for the touch
 
   e.preventDefault(); // Prevent default touch behavior for the steering wheel
 });
@@ -94,7 +92,7 @@ steeringWheel.addEventListener("touchmove", (e) => {
 });
 
 steeringWheel.addEventListener("touchend", (e) => {
-  // Remove the starting angles for released touches
+  // Remove the starting angle for the released touch
   Array.from(e.changedTouches).forEach((touch) => {
     delete startAngles[touch.identifier];
   });
@@ -104,6 +102,7 @@ steeringWheel.addEventListener("touchend", (e) => {
     animateReturnToCenter();
   }
 });
+
 
 // Prevent default gestures and refresh on pull down
 document.addEventListener("gesturestart", e => e.preventDefault());
