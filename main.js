@@ -1,7 +1,9 @@
 // .......................
-const steeringWheel = document.getElementById("_svg");
+const steeringWheel = document.getElementById("_steering");
+const forward = document.getElementById("_forward");
 const rotationDisplay = document.getElementById("rotationValue");
 const button = document.getElementById("fs");
+const _index = document.getElementById("_index");
 
 let isDragging = false;
 let angle = 0; // Current rotation angle in radians
@@ -27,7 +29,7 @@ function rotateSteeringWheel(e) {
 
   const { x, y } = getAverageTouchPos(e.touches);
   const newAngle = Math.atan2(y, x);
-  
+
   let deltaAngle = newAngle - startAngle;
 
   // Normalize deltaAngle to [-π, π]
@@ -44,13 +46,16 @@ function rotateSteeringWheel(e) {
 function getAverageTouchPos(touches) {
   const touch = touches[0]; // Use only the first touch
   const rect = steeringWheel.getBoundingClientRect();
-  return { x: touch.clientX - rect.left - rect.width / 2, y: touch.clientY - rect.top - rect.height / 2 };
+  return {
+    x: touch.clientX - rect.left - rect.width / 2,
+    y: touch.clientY - rect.top - rect.height / 2,
+  };
 }
 
 // Function to animate return to center
 function animateReturnToCenter() {
   if (Math.abs(angle) > 0.01) {
-    angle *= (1 - DAMPING);
+    angle *= 1 - DAMPING;
     updateSteeringWheel();
     animationFrame = requestAnimationFrame(animateReturnToCenter);
   } else {
@@ -60,16 +65,29 @@ function animateReturnToCenter() {
   }
 }
 
+function handleTouchStart(e, index) {
+  const touches = e.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    const touch = touches[i];
+    console.log(touch);
+    _index.textContent = `touch = ${touch.identifier}`;
+
+    if (index === 1) {
+      // alert("hello");
+    }
+    if (index === 0) {
+      isDragging = true;
+      cancelAnimationFrame(animationFrame); // Stop animation
+      const { x, y } = getAverageTouchPos(e.touches);
+      startAngle = Math.atan2(y, x); // Store the starting angle for the touch
+    }
+  }
+}
 // Event listeners
 steeringWheel.addEventListener("touchstart", (e) => {
-  isDragging = true;
-  cancelAnimationFrame(animationFrame); // Stop animation
-
-  const touch = e.touches[0]; // Get the first touch
-  const { x, y } = getAverageTouchPos(e.touches);
-  startAngle = Math.atan2(y, x); // Store the starting angle for the touch
-
   e.preventDefault(); // Prevent default touch behavior for the steering wheel
+  handleTouchStart(e, 0);
 });
 
 steeringWheel.addEventListener("touchmove", (e) => {
@@ -84,11 +102,22 @@ steeringWheel.addEventListener("touchend", (e) => {
   animateReturnToCenter();
 });
 
-// Prevent default gestures and refresh on pull down
-document.addEventListener("gesturestart", e => e.preventDefault());
-document.addEventListener("touchmove", e => {
-  if (!isDragging) e.preventDefault(); // Prevent scrolling only when not dragging
-}, { passive: false });
+forward.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  handleTouchStart(e, 1);
+});
+// document.addEventListener("touchstart", (e) => {
+//   e.preventDefault();
+//   handleTouchStart(e, 0);
+// });
+document.addEventListener("gesturestart", (e) => e.preventDefault());
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!isDragging) e.preventDefault(); // Prevent scrolling only when not dragging
+  },
+  { passive: false }
+);
 window.addEventListener("scroll", () => window.scrollTo(0, 0));
 
 // Fullscreen functionality
@@ -97,7 +126,7 @@ button.addEventListener("click", () => {
     document.exitFullscreen();
     button.textContent = "fs";
   } else {
-    document.documentElement.requestFullscreen().catch(err => {
+    document.documentElement.requestFullscreen().catch((err) => {
       console.log(`Error message: ${err.message}`);
     });
     button.textContent = "ex";

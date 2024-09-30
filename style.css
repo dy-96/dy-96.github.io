@@ -5,13 +5,22 @@ body {
   height: 800px;
   margin: 0;
 }
-#_svg {
+#_steering {
   width: 200px;
   height: 200px;
   background: lightgray;
   border-radius: 50%;
   touch-action: none; /* Prevent default touch actions */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+#_forward {
+  font-size: 30px;
+  font-style: inherit;
+  position: absolute;
+  bottom: 5px;
 }
 #fs {
   position: absolute;
