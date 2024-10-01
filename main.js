@@ -1,11 +1,15 @@
 // .......................
 const steeringWheel = document.getElementById("_steering");
-const forward = document.getElementById("_forward");
+// const forward = document.getElementById("_forward");
 const rotationDisplay = document.getElementById("rotationValue");
 const button = document.getElementById("fs");
 const _index = document.getElementById("_index");
 
-let isDragging = false;
+const slider = document.getElementById("slider");
+const sliderContainer = document.getElementById("sliderBox");
+const valueDisplay = document.getElementById("valueDisplay");
+
+let isDraggingStr = false;
 let angle = 0; // Current rotation angle in radians
 let startAngle = 0; // Store the starting angle for the touch
 let animationFrame;
@@ -73,11 +77,11 @@ function handleTouchStart(e, index) {
     console.log(touch);
     _index.textContent = `touch = ${touch.identifier}`;
 
-    if (index === 1) {
-      // alert("hello");
-    }
+    // if (index === 1) {
+    //   // alert("hello");
+    // }
     if (index === 0) {
-      isDragging = true;
+      isDraggingStr = true;
       cancelAnimationFrame(animationFrame); // Stop animation
       const { x, y } = getAverageTouchPos(e.touches);
       startAngle = Math.atan2(y, x); // Store the starting angle for the touch
@@ -91,21 +95,21 @@ steeringWheel.addEventListener("touchstart", (e) => {
 });
 
 steeringWheel.addEventListener("touchmove", (e) => {
-  if (isDragging) {
+  if (isDraggingStr) {
     rotateSteeringWheel(e);
     e.preventDefault(); // Prevent scrolling
   }
 });
 
 steeringWheel.addEventListener("touchend", (e) => {
-  isDragging = false; // End dragging
+  isDraggingStr = false; // End dragging
   animateReturnToCenter();
 });
 
-forward.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  handleTouchStart(e, 1);
-});
+// forward.addEventListener("touchstart", (e) => {
+//   e.preventDefault();
+//   handleTouchStart(e, 1);
+// });
 // document.addEventListener("touchstart", (e) => {
 //   e.preventDefault();
 //   handleTouchStart(e, 0);
@@ -114,7 +118,7 @@ document.addEventListener("gesturestart", (e) => e.preventDefault());
 document.addEventListener(
   "touchmove",
   (e) => {
-    if (!isDragging) e.preventDefault(); // Prevent scrolling only when not dragging
+    if (!isDraggingStr) e.preventDefault(); // Prevent scrolling only when not dragging
   },
   { passive: false }
 );
@@ -131,4 +135,55 @@ button.addEventListener("click", () => {
     });
     button.textContent = "ex";
   }
+});
+
+//...........................................................
+//...............handleSlider................................
+let isDragging = false;
+
+function updateSliderValue(yPosition) {
+    const containerHeight = sliderContainer.clientHeight;
+    const sliderHeight = slider.clientHeight;
+    const maxPosition = containerHeight - sliderHeight;
+
+    let newPosition = containerHeight - yPosition - sliderHeight / 2;
+    newPosition = Math.max(0, Math.min(newPosition, maxPosition));
+
+    const value = Math.round((newPosition / maxPosition) * 100);
+    slider.style.bottom = `${newPosition}px`;
+    valueDisplay.textContent = `Value: ${value}`;
+}
+
+// Mouse events
+slider.addEventListener("mousedown", (e) => {
+    isDragging = true;
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+        const rect = sliderContainer.getBoundingClientRect();
+        const y = e.clientY - rect.top;
+        updateSliderValue(y);
+    }
+});
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+// Touch events
+slider.addEventListener("touchstart", (e) => {
+    isDragging = true;
+});
+
+document.addEventListener("touchmove", (e) => {
+    if (isDragging) {
+        const rect = sliderContainer.getBoundingClientRect();
+        const y = e.touches[0].clientY - rect.top;
+        updateSliderValue(y);
+    }
+});
+
+document.addEventListener("touchend", () => {
+    isDragging = false;
 });

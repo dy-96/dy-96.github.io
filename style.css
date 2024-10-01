@@ -6,12 +6,15 @@ body {
   margin: 0;
 }
 #_steering {
+  background-image: url('./desain/steering.svg');
+  background-size: 104% 104%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 200px;
   height: 200px;
-  background: lightgray;
   border-radius: 50%;
-  touch-action: none; /* Prevent default touch actions */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   position: absolute;
   right: 20px;
   top: 20px;
@@ -26,4 +29,32 @@ body {
   position: absolute;
   left: 5px;
   top: 5px;
+}
+.box-control{
+  position: absolute;
+  bottom: 0px;
+  left: 5px;
+  text-align: center;
+}
+#sliderBox {
+  width: 50px;
+  height: 150px;
+  background-color: #ccc;
+  position: relative;
+  border-radius: 5px;
+}
+
+#slider {
+  width: 50px;
+  height: 20px;
+  background-color: #007bff;
+  position: absolute;
+  bottom: 0;
+  border-radius: 5px;
+  touch-action: none; /* Support for touch */
+}
+
+#valueDisplay {
+  margin-top: 20px;
+  font-size: 24px;
 }
